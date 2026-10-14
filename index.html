@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feruz Gʻulomjonov | Cybersecurity</title>
+<meta name="description" content="Feruz Gʻulomjonov — Cyber University talabasi. Linux, C++, Networking, CTF, SOC.">
+<style>
+:root{
+  --card:rgba(10,30,90,.55);
+  --line:rgba(255,90,110,.38);
+  --red:#ff3d52;
+  --red-soft:#ffa3ad;
+  --red-bright:#ff6b7a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--red-soft);line-height:1.7;min-height:100vh;overflow-x:hidden;
+  background:#050d2e;
+}
+
+/* ===== CHIROYLI ORQA FON ===== */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 15% 10%, #1b3fd8 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, #5b1fd1 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, #0a63d6 0%, transparent 55%),
+    linear-gradient(160deg,#050d2e,#0a1f6b 55%,#07123d);
+}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 18s ease-in-out infinite}
+.b1{width:480px;height:480px;background:#2a6bff;top:-120px;left:-100px}
+.b2{width:420px;height:420px;background:#7a3cff;top:30%;right:-120px;animation-delay:-6s}
+.b3{width:380px;height:380px;background:#00c2ff;bottom:-120px;left:25%;animation-delay:-11s;opacity:.4}
+.b4{width:300px;height:300px;background:#ff3d52;top:55%;left:-100px;animation-delay:-3s;opacity:.28}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,-50px) scale(1.15)}
+  66%{transform:translate(-40px,60px) scale(.92)}
+}
+.stars{position:absolute;inset:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),
+    radial-gradient(1px 1px at 120px 80px,#cfe0ff,transparent),
+    radial-gradient(1.5px 1.5px at 220px 160px,#fff,transparent),
+    radial-gradient(1px 1px at 300px 40px,#ffd0d5,transparent),
+    radial-gradient(1px 1px at 380px 200px,#fff,transparent);
+  background-size:400px 260px;opacity:.55;animation:twinkle 6s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.25}}
+#rain{position:absolute;inset:0;opacity:.35}
+
+main,.nav,footer{position:relative;z-index:1}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
+  background:linear-gradient(90deg,#00c2ff,var(--red),#ffd1d6);box-shadow:0 0 12px var(--red)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:12px 5vw;background:rgba(5,13,46,.7);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:1.3rem;color:var(--red);text-decoration:none;text-shadow:0 0 12px rgba(255,61,82,.7)}
+#menu{display:flex;gap:6px;flex-wrap:wrap}
+#menu a{color:var(--red-soft);text-decoration:none;padding:6px 12px;border-radius:999px;font-size:.95rem;transition:.2s}
+#menu a:hover,#menu a.active{color:#fff;background:rgba(255,61,82,.28);box-shadow:0 0 14px rgba(255,61,82,.4)}
+.lang{background:transparent;color:var(--red);border:1.5px solid var(--red);border-radius:10px;padding:6px 14px;font-weight:800;cursor:pointer;transition:.2s}
+.lang:hover{background:var(--red);color:#fff}
+
+/* LAYOUT */
+section{max-width:1050px;margin:0 auto;padding:80px 5vw 20px}
+h1,h2,h3{color:var(--red);line-height:1.2}
+h1{font-size:clamp(2.2rem,7vw,4rem);font-weight:800;margin:8px 0 18px;color:#fff}
+h1 .name{background:linear-gradient(90deg,#ff3d52,#ffb0b8);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(255,61,82,.5))}
+h2{font-size:clamp(1.8rem,5vw,2.6rem);margin-bottom:8px;text-shadow:0 0 20px rgba(255,61,82,.4)}
+h3{font-size:1.25rem;margin-bottom:10px}
+.sub{margin-bottom:26px}
+.eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:var(--red-bright);font-size:.85rem}
+.lead{max-width:680px;font-size:1.1rem}
+.hero{padding-top:70px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 34px}
+.btn{display:inline-block;text-decoration:none;color:var(--red);font-weight:700;background:rgba(255,61,82,.1);border:1.5px solid var(--red);padding:12px 22px;border-radius:14px;transition:.2s}
+.btn:hover{background:var(--red);color:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,61,82,.4)}
+.btn.ghost{border-color:var(--line)}
+
+/* TERMINAL */
+.terminal{max-width:560px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(3,10,35,.85);box-shadow:0 0 50px rgba(255,61,82,.18)}
+.terminal .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.terminal .bar i{width:11px;height:11px;border-radius:50%;background:#ff5f56}
+.terminal .bar i:nth-child(2){background:#ffbd2e}.terminal .bar i:nth-child(3){background:#27c93f}
+.terminal .bar span{margin-left:8px}
+#term{padding:18px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;color:var(--red-bright);white-space:pre-wrap;min-height:310px}
+#term .cur{display:inline-block;width:9px;height:1em;background:var(--red);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* CARDS */
+.grid{display:grid;gap:18px}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,20,.35)}
+.card.hover{transition:.25s}
+.card.hover:hover{transform:translateY(-6px);border-color:var(--red);box-shadow:0 14px 36px rgba(255,61,82,.3)}
+.ico{font-size:2rem;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.tags span{border:1px solid var(--red);color:var(--red);padding:6px 16px;border-radius:999px;font-weight:600;font-size:.9rem;background:rgba(255,61,82,.1)}
+.timeline{list-style:none;border-left:2px solid var(--red);padding-left:18px}
+.timeline li{display:flex;flex-direction:column}
+.timeline b{color:var(--red)}
+
+/* THM */
+.thm{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.badge-wrap img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#0a1a3f;min-height:60px}
+.note{font-size:.9rem;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;width:100%}
+.stats div{background:rgba(255,61,82,.09);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+.stats b{display:block;font-size:1.8rem;color:var(--red)}
+.stats span{font-size:.85rem}
+
+.live{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--red);background:rgba(255,61,82,.14);color:#fff;padding:8px 18px;border-radius:999px;font-weight:700;margin-bottom:22px;box-shadow:0 0 24px rgba(255,61,82,.3)}
+.live i{width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,61,82,.8)}70%{box-shadow:0 0 0 12px rgba(255,61,82,0)}100%{box-shadow:0 0 0 0 rgba(255,61,82,0)}}
+.lives{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.lives .live{margin-bottom:0}
+.thm-info{margin-bottom:18px}
+.thm-info ul{list-style:none;margin-top:8px}
+.thm-info li{padding-left:22px;position:relative;margin:6px 0}
+.thm-info li::before{content:"▸";position:absolute;left:0;color:var(--red)}
+
+/* PROJECTS */
+.proj h3{margin:6px 0 8px}
+.proj .t{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.proj .t span{border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.8rem;color:var(--red)}
+.proj a{color:var(--red);font-weight:700;text-decoration:none}
+.proj a:hover{text-decoration:underline}
+
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+footer{text-align:center;padding:50px 5vw;margin-top:50px;border-top:1px solid var(--line);font-size:.95rem}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.show{opacity:1;transform:none}
+
+@media (max-width:600px){
+  .nav{padding:10px 4vw}
+  #menu a{padding:5px 9px;font-size:.85rem}
+  section{padding-top:60px}
+  .blob{filter:blur(70px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="stars"></div>
+  <canvas id="rain"></canvas>
+</div>
+<div class="progress" id="progress"></div>
+
+<header class="nav">
+  <a class="logo" href="#home">&lt;FG/&gt;</a>
+  <nav id="menu">
+    <a href="#about" data-uz="Men haqimda" data-en="About"></a>
+    <a href="#skills" data-uz="Koʻnikmalar" data-en="Skills"></a>
+    <a href="#thm" data-uz="TryHackMe" data-en="TryHackMe"></a>
+    <a href="#projects" data-uz="Loyihalar" data-en="Projects"></a>
+    <a href="#contact" data-uz="Aloqa" data-en="Contact"></a>
+  </nav>
+  <button class="lang" id="lang" aria-label="Til / Language">EN</button>
+</header>
+
+<main>
+  <section id="home" class="hero">
+    <p class="eyebrow">CYBERSECURITY • CTF • SOC</p>
+    <h1><span data-uz="Salom, men" data-en="Hi, I'm"></span><br><span class="name">Feruz Gʻulomjonov</span></h1>
+    <p class="lead" data-uz="Cyber University talabasi. Linux, tarmoq va xavfsizlik tahlili boʻyicha amaliy koʻnikma hosil qilaman, oʻrganganlarimni hujjatlashtiraman va loyihaga aylantiraman."
+       data-en="Cyber University student building practical skills in Linux, networking and security analysis. I document what I learn and turn it into projects."></p>
+    <div class="cta">
+      <a class="btn" href="#projects" data-uz="Loyihalarni koʻrish ↓" data-en="Explore projects ↓"></a>
+      <a class="btn ghost" href="#contact" data-uz="Bogʻlanish" data-en="Get in touch"></a>
+    </div>
+    <div class="terminal">
+      <div class="bar"><i></i><i></i><i></i><span>feruz@portfolio:~</span></div>
+      <pre id="term"></pre>
+    </div>
+  </section>
+
+  <section id="about" class="reveal">
+    <h2 data-uz="Men haqimda" data-en="About me"></h2>
+    <p class="sub" data-uz="Qiziquvchan, izchil va amaliy xavfsizlik koʻnikmalariga yoʻnalgan." data-en="Curious, consistent and focused on practical security skills."></p>
+    <div class="grid two">
+      <div class="card">
+        <h3 data-uz="Taʼlim" data-en="Education"></h3>
+        <ul class="timeline"><li><b>2026 – <span data-uz="hozir" data-en="present"></span></b><span>Cyber University</span></li></ul>
+      </div>
+      <div class="card">
+        <h3 data-uz="Yondashuvim" data-en="My approach"></h3>
+        <p data-uz="Men qilib oʻrganaman: ruxsat etilgan laboratoriyalarda mashq qilaman, tartibli konspekt yuritaman va tushunchalarni oddiy tilda tushuntiraman."
+           data-en="I learn by doing: practicing in authorized labs, taking structured notes and explaining concepts clearly."></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <h2 data-uz="Koʻnikmalar va qiziqishlar" data-en="Skills & interests"></h2>
+    <div class="grid three">
+      <div class="card hover"><div class="ico">🐧</div><h3>Linux</h3><p data-uz="Buyruqlar, ruxsatlar (permissions), jarayonlar va shell asoslari." data-en="Commands, permissions, processes and shell basics."></p></div>
+      <div class="card hover"><div class="ico">⚙️</div><h3>C++</h3><p data-uz="Dasturlash asoslari va xavfsiz kod yozishga qiziqish." data-en="Programming fundamentals and interest in writing secure code."></p></div>
+      <div class="card hover"><div class="ico">🌐</div><h3>Networking</h3><p data-uz="TCP/IP, DNS, HTTP va tarmoq muammolarini aniqlash." data-en="TCP/IP, DNS, HTTP and network troubleshooting."></p></div>
+      <div class="card hover"><div class="ico">🚩</div><h3>CTF</h3><p data-uz="Musobaqa va laboratoriyalarda amaliy masalalar yechish." data-en="Solving practical challenges in competitions and labs."></p></div>
+      <div class="card hover"><div class="ico">🛡️</div><h3>SOC</h3><p data-uz="Loglarni tahlil qilish va tahdidlarni aniqlash asoslari." data-en="Log analysis and threat detection basics."></p></div>
+      <div class="card hover"><div class="ico">💻</div><h3>Developer</h3><p data-uz="Kichik vositalar va skriptlar yaratish." data-en="Building small tools and scripts."></p></div>
+      <div class="card hover"><div class="ico">🇬🇧</div><h3 data-uz="Ingliz tili" data-en="English"></h3><p data-uz="Texnik hujjatlar, write-up'lar va xalqaro hamjamiyat bilan muloqot uchun har kuni oʻrganaman." data-en="Learning every day for technical documentation, write-ups and communicating with the global community."></p></div>
+    </div>
+    <div class="tags"><span>Linux</span><span>C++</span><span>Networking</span><span>CTF</span><span>SOC</span><span>Developer</span><span data-uz="Ingliz tili (oʻrganyapman)" data-en="English (learning)"></span></div>
+  </section>
+
+  <section id="thm" class="reveal">
+    <h2 data-uz="TryHackMe faoliyati" data-en="TryHackMe activity"></h2>
+    <p class="sub" data-uz="Ruxsat etilgan oʻquv xonalarida amaliy mashqlar." data-en="Hands-on practice in authorized training rooms."></p>
+    <div class="lives">
+      <div class="live"><i></i><span data-uz="Hozir oʻrganyapman: TryHackMe" data-en="Currently learning on TryHackMe"></span></div>
+      <div class="live"><i></i><span data-uz="Hozir oʻrganyapman: Ingliz tili" data-en="Currently learning: English"></span></div>
+    </div>
+    <div class="grid two thm-info">
+      <div class="card">
+        <h3 data-uz="TryHackMe nima?" data-en="What is TryHackMe?"></h3>
+        <p data-uz="TryHackMe — kiberxavfsizlikni amaliy mashq orqali oʻrgatadigan onlayn platforma. Darslar brauzerda ochiladigan virtual laboratoriyalar (“xonalar”) koʻrinishida boʻladi, shuning uchun oʻz kompyuteringizga hech narsa oʻrnatmasdan xavfsiz muhitda mashq qilish mumkin."
+           data-en="TryHackMe is an online platform that teaches cybersecurity through hands-on practice. Lessons come as browser-based virtual labs (“rooms”), so you can practice in a safe environment without installing anything on your own computer."></p>
+      </div>
+      <div class="card">
+        <h3 data-uz="Men uni qanday ishlataman?" data-en="How I use it"></h3>
+        <ul>
+          <li data-uz="Har bir xonadan keyin tartibli konspekt yuritaman" data-en="I take structured notes after every room"></li>
+          <li data-uz="Linux, Networking va SOC mavzularini amalda mustahkamlayman" data-en="I reinforce Linux, Networking and SOC topics in practice"></li>
+          <li data-uz="Faqat ruxsat etilgan laboratoriyalarda mashq qilaman" data-en="I practice only in authorized labs"></li>
+          <li data-uz="Oʻrganganlarimni write-up sifatida hujjatlashtiraman" data-en="I document what I learn as write-ups"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card thm">
+      <div class="badge-wrap">
+        <img id="badge" alt="TryHackMe badge" loading="lazy" src="https://tryhackme-badges.s3.amazonaws.com/gulomjonov1ch2.png">
+        <p class="note" id="badgeNote" hidden data-uz="Badge yuklanmadi — profilni havola orqali oching." data-en="Badge didn't load — open the profile via the link."></p>
+      </div>
+      <div class="stats">
+        <div><b id="s-rooms">—</b><span data-uz="Yakunlangan xonalar" data-en="Rooms completed"></span></div>
+        <div><b id="s-streak">—</b><span data-uz="Kunlik seriya" data-en="Day streak"></span></div>
+        <div><b id="s-rank">—</b><span data-uz="Daraja (rank)" data-en="Rank"></span></div>
+      </div>
+      <a class="btn" target="_blank" rel="noopener" href="https://tryhackme.com/p/gulomjonov1ch2" data-uz="Profilni ochish ↗" data-en="Open profile ↗"></a>
+    </div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <h2 data-uz="Loyihalar" data-en="Featured projects"></h2>
+    <p class="sub" data-uz="Tanlangan oʻquv konspektlari va amaliy loyihalar." data-en="Selected learning notes and practice projects."></p>
+    <div class="grid three" id="projectList"></div>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="card">
+      <h2 data-uz="Bogʻlanamiz" data-en="Let's connect"></h2>
+      <p data-uz="Kiberxavfsizlik, oʻquv resurslari yoki hamkorlik boʻyicha yozing. Quyidagi platformalarda topasiz." data-en="Interested in cybersecurity, learning resources or collaboration? Find me on the platforms below."></p>
+      <div class="links">
+        <a class="btn" href="tel:+998888510950">📞 +998 88 851 09 50</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.linkedin.com/in/gulomjonov1ch2">LinkedIn ↗</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://tryhackme.com/p/gulomjonov1ch2">TryHackMe ↗</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.instagram.com/gulomjonov1ch_2">Instagram ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Feruz Gʻulomjonov · <span data-uz="Qiziqish va izchillik bilan yaratilgan." data-en="Built with curiosity and consistency."></span></footer>
+
+<script>
+/* ============ SOZLAMALAR — shu yerni oʻzingiz tahrirlang ============ */
+const CONFIG = {
+  // TryHackMe profilingizdagi haqiqiy raqamlar (boʻsh qolsa "—" koʻrinadi)
+  thm: { rooms: "", streak: "", rank: "" },
+  // Loyihalar: GitHub havolasini oʻz repository manzilingizga almashtiring
+  projects: [
+    { icon:"🐧", uz:["Linux konspektlari","Buyruqlar, ruxsatlar, jarayonlar va shell boʻyicha qoʻllanma."],
+      en:["Linux Learning Notes","A beginner-friendly reference of commands, permissions, processes and shell basics."],
+      tags:["Linux","Documentation"], url:"https://github.com/" },
+    { icon:"🚩", uz:["TryHackMe Write-up'lar","Ruxsat etilgan xonalardan konspektlar va olingan saboqlar."],
+      en:["TryHackMe Write-ups","Summaries from authorized training rooms with key concepts and lessons learned."],
+      tags:["CTF","Learning"], url:"https://tryhackme.com/p/gulomjonov1ch2" },
+    { icon:"🌐", uz:["Networking asoslari","TCP/IP, DNS, HTTP va tarmoq muammolarini topish boʻyicha mashqlar."],
+      en:["Networking Fundamentals","Notes and small exercises on TCP/IP, DNS, HTTP and troubleshooting."],
+      tags:["Networking","Security"], url:"https://github.com/" },
+    { icon:"⚙️", uz:["C++ mashqlari","Dasturlash asoslari va kichik amaliy vazifalar."],
+      en:["C++ Practice","Programming fundamentals and small practical tasks."],
+      tags:["C++","Developer"], url:"https://github.com/" }
+  ]
+};
+/* =================================================================== */
+
+let lang = "uz";
+try { lang = localStorage.getItem("lang") || "uz"; } catch (e) {}
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+function applyLang() {
+  document.documentElement.lang = lang;
+  $$("[data-uz]").forEach(el => { el.textContent = el.dataset[lang]; });
+  $("#lang").textContent = lang === "uz" ? "EN" : "UZ";
+  renderProjects();
+  runTerminal();
+}
+$("#lang").addEventListener("click", () => {
+  lang = lang === "uz" ? "en" : "uz";
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+  applyLang();
+});
+
+function renderProjects() {
+  $("#projectList").innerHTML = CONFIG.projects.map(p => {
+    const [title, desc] = p[lang];
+    const tags = p.tags.map(t => `<span>${t}</span>`).join("");
+    const label = lang === "uz" ? "Koʻrish →" : "View →";
+    return `<article class="card hover proj"><div class="ico">${p.icon}</div><h3>${title}</h3><p>${desc}</p><div class="t">${tags}</div><a href="${p.url}" target="_blank" rel="noopener">${label}</a></article>`;
+  }).join("");
+}
+
+(function thm() {
+  const { rooms, streak, rank } = CONFIG.thm;
+  if (rooms) $("#s-rooms").textContent = rooms;
+  if (streak) $("#s-streak").textContent = streak;
+  if (rank) $("#s-rank").textContent = rank;
+  $("#badge").addEventListener("error", () => { $("#badge").style.display = "none"; $("#badgeNote").hidden = false; });
+})();
+
+let termTimer;
+function runTerminal() {
+  clearTimeout(termTimer);
+  const out = $("#term");
+  const lines = [
+    ["feruz@kali:~$ ", "whoami"],
+    ["", lang === "uz" ? "kiberxavfsizlik talabasi" : "cybersecurity student"],
+    ["feruz@kali:~$ ", "cat mission.txt"],
+    ["", "> stack  : Linux, C++, Networking"],
+    ["", "> path   : CTF, SOC, Developer"],
+    ["", "> lab    : TryHackMe"],
+    ["", lang === "uz" ? "> til    : ingliz tili (oʻrganaman)" : "> lang   : English (learning)"],
+    ["", lang === "uz" ? "> holat  : har kuni oʻrganaman" : "> status : learning every day"],
+    ["", lang === "uz" ? "> maqsad : tizimlarni himoya qilish" : "> goal   : defend systems & networks"],
+    ["feruz@kali:~$ ", ""]
+  ];
+  let li = 0, ci = 0, text = "";
+  (function step() {
+    if (li >= lines.length) { out.innerHTML = text + '<span class="cur"></span>'; return; }
+    const [prompt, cmd] = lines[li];
+    if (ci === 0) text += prompt;
+    if (ci < cmd.length) {
+      text += cmd[ci++];
+      out.innerHTML = text + '<span class="cur"></span>';
+      termTimer = setTimeout(step, 45);
+    } else {
+      if (li < lines.length - 1) text += "\n";
+      li++; ci = 0;
+      termTimer = setTimeout(step, 260);
+    }
+  })();
+}
+
+const sections = $$("main section"), links = $$("#menu a");
+addEventListener("scroll", () => {
+  const h = document.documentElement;
+  $("#progress").style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + "%";
+  let cur = "";
+  sections.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
+  links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + cur));
+}, { passive: true });
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
+}), { threshold: .12 });
+$$(".reveal").forEach(el => io.observe(el));
+
+(function rain() {
+  const c = $("#rain"), ctx = c.getContext("2d");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let w, h, cols, drops; const size = 16;
+  function resize() {
+    w = c.width = innerWidth; h = c.height = innerHeight;
+    cols = Math.floor(w / size); drops = Array.from({ length: cols }, () => Math.random() * h / size);
+  }
+  resize(); addEventListener("resize", resize);
+  setInterval(() => {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(255,90,110,.6)"; ctx.font = size + "px monospace";
+    drops.forEach((y, i) => {
+      ctx.fillText(Math.random() > .5 ? "1" : "0", i * size, y * size);
+      drops[i] = y * size > h && Math.random() > .975 ? 0 : y + .35;
+    });
+  }, 70);
+})();
+
+applyLang();
+</script>
+</body>
+</html>
